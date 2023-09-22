@@ -1,3 +1,4 @@
+import { OAuthProvider } from '@magic-ext/oauth'
 import { Dispatch, SetStateAction } from 'react'
 
 export type LoginProps = {
@@ -6,7 +7,7 @@ export type LoginProps = {
 }
 
 export type SocialLoginProps = {
-  socialProvider: string
+  socialProvider: OAuthProvider
   network: string
 }
 

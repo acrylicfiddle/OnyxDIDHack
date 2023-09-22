@@ -7,7 +7,7 @@ import { getSVGPath } from '../../utils/social';
 import { useDispatch } from 'react-redux';
 import { setUser, setNetwork, setToken, setLoginMethod } from '../../store/features/rootSlice';
 
-const OAuthSignUp = ({ socialProvider, network}: SocialLoginProps) => {
+const OAuthSignUp = ({ socialProvider, network }: SocialLoginProps) => {
     const { magic } = useMagic();
     const router = useRouter();
     const { provider, state, scope, magic_oauth_request_id, magic_credential } = router.query;
@@ -20,6 +20,10 @@ const OAuthSignUp = ({ socialProvider, network}: SocialLoginProps) => {
             const processOAuthResult = async () => {
                 try {
                     const result = await magic?.oauth.getRedirectResult();
+                    if (!result) {
+                        console.log('OAuth result is null');
+                        throw new Error('OAuth result is null');
+                    }
                     console.log("Result: ", result);
                     dispatch(setUser(result.magic.userMetadata.publicAddress));
                     dispatch(setToken(result.oauth.accessToken));

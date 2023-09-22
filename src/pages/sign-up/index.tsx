@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MagicLogin from "../../../components/magic";
+import MagicLogin from "../../components/magic";
 
 const Index = () => {
 

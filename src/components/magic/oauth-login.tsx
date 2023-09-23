@@ -45,7 +45,7 @@ const OAuthSignUp = ({ socialProvider, network }: SocialLoginProps) => {
             dispatch(setNetwork(network));
             await magic?.oauth.loginWithRedirect({
                 provider: socialProvider,
-                redirectURI: 'http://localhost:3000/sign-up/',
+                redirectURI: 'https://onyx-did-hack.vercel.app/sign-up/',
             })           
         } catch (e) {
             console.log('login error: ' + JSON.stringify(e));

@@ -3,8 +3,10 @@ import {
     initialNetworkState, 
     initialUserState, 
     initialTokenState, 
-    initialLoginMethodState 
+    initialLoginMethodState,
+    initialEmailOrHandleState 
 } from './types';
+import { OAuthProvider } from '@magic-ext/oauth';
 
 export const networkSlice = createSlice({
     name: 'network',
@@ -46,7 +48,7 @@ export const loginMethodSlice = createSlice({
     name: 'loginMethod',
     initialState: initialLoginMethodState,
     reducers: {
-        setLoginMethod: (state, action: PayloadAction<string>) => {
+        setLoginMethod: (state, action: PayloadAction<OAuthProvider>) => {
             state.loginMethod = action.payload;
         },
         clearLoginMethod: (state) => {
@@ -55,17 +57,32 @@ export const loginMethodSlice = createSlice({
     }
 }); 
 
+export const emailOrHandleSlice = createSlice({
+    name: 'emailOrHandle',
+    initialState: initialEmailOrHandleState,
+    reducers: {
+        setEmailOrHandle: (state, action: PayloadAction<string>) => {
+            state.emailOrHandle = action.payload;
+        },
+        clearEmailOrHandle: (state) => {
+            state.emailOrHandle = undefined;
+        }
+    }
+});
+
 const rootReducer = combineReducers({
     network: networkSlice.reducer,
     user: userSlice.reducer,
     token: tokenSlice.reducer,
     loginMethod: loginMethodSlice.reducer,
+    emailOrHandle: emailOrHandleSlice.reducer
 });
 
 export const { setNetwork } = networkSlice.actions;
 export const { setUser, clearUser } = userSlice.actions;
 export const { setToken, clearToken } = tokenSlice.actions;
 export const { setLoginMethod, clearLoginMethod } = loginMethodSlice.actions;
+export const { setEmailOrHandle, clearEmailOrHandle } = emailOrHandleSlice.actions;
 
 // export const selectNetwork = (state: RootState) => state.network.network;
 // export const selectUser = (state: RootState) => state.user.user;

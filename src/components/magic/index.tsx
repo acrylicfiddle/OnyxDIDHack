@@ -1,11 +1,11 @@
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import OAuthSignUp from './oauth-login';
-import { LoginProps, NetworkSelectBoxProps } from '../../utils/types';
+import { NetworkSelectBoxProps } from '../../utils/types';
 import MagicProvider from './magic-provider';
 
 const NETWORKS = [
-	{ value: "ethereum-goerli", name: "Goerli Testnet" },
+	{ value: "ethereum-goerli", name: "Ethereum Goerli" },
 	{ value: "polygon-mumbai", name: "Polygon Mumbai" },
 ];
 
@@ -42,15 +42,15 @@ const MagicLogin = () =>  {
                 <div className="login-page">
                     <div className='login-method-grid-item-container'>
                         <h1 className="login-title">Sign Up</h1>
-                        <NetworkSelectBox 
-                            options={NETWORKS} 
-                            currentValue={network} 
-                            onNetworkChange={setNetwork}
-                        />                        
-                        <div className='login-method-grid'>
-                            <OAuthSignUp network={network} socialProvider='google'/>
-                            <OAuthSignUp network={network} socialProvider='twitter'/>
-                            <OAuthSignUp network={network} socialProvider='discord'/>
+                        <div className='login-box'>
+                            <p className='login-description-1'>Blockchain</p>
+                            <NetworkSelectBox 
+                                options={NETWORKS} 
+                                currentValue={network} 
+                                onNetworkChange={setNetwork}
+                            />
+                            <p className='login-description-2'>Sign in with</p>                        
+                            <OAuthSignUp network={network} />
                         </div>
                     </div>
                 </div>

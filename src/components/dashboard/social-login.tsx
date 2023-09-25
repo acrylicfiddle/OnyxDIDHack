@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { IBundler, Bundler } from '@biconomy/bundler';
 import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS  } from '@biconomy/account'
 import { useMagic } from '../magic/magic-provider';
@@ -11,8 +11,8 @@ import { useRouter } from 'next/router';
 import { getPaymasterURLPerNetwork, getBiconomyChainId } from '../../utils/network';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { clearUser, clearToken, clearLoginMethod } from '../../store/features/rootSlice';
-import { clear } from 'console';
+import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
+import SideBar from './sidebar';
 
 export default function Auth() {
     const [address, setAddress] = useState<string>("")
@@ -94,6 +94,7 @@ export default function Auth() {
         dispatch(clearUser());
         dispatch(clearToken());
         dispatch(clearLoginMethod());
+        dispatch(clearEmailOrHandle());
         setSmartAccount(null);
         enableInterval(false);
         router.push('/sign-up');
@@ -101,29 +102,32 @@ export default function Auth() {
     
 
     return (
-          <div className='dashboard-container'>
-                <h1 className='login-title'>Dashboard</h1>
-                {
-                    loading && <p>Loading account details...</p>
-                }
-                {
-                    !!smartAccount && currentToken && (
-                        <div className={detailsContainerStyle}>
-                          <h3>Smart account address:</h3>
-                          <p>{address}</p>
-                          <button className={buttonStyle} onClick={logoutFromAll}>Logout</button>
-                        </div>
-                    )
-                }
-                {
-                    !currentToken && (
-                        <div className={detailsContainerStyle}>
-                            <h3>Loading...</h3>
-                            <button className={buttonStyle} onClick={login}>Go Back to Login Page</button>
-                        </div>
-                    )
-                }
+        <div className='dashboard-page'>
+            <SideBar />
+            <div className='dashboard-container'>
+                <h1 className='dashboard-title'>Dashboard</h1>
+                <div className='dashboard-content-container'>
+
+                    {
+                        !!smartAccount && currentToken && (
+                            <div className='dashboard-box'>
+                            <h3 className='wallet-text'>Smart account address:</h3>
+                            <p className='wallet-text'>{address}</p>
+                            <button className={buttonStyle} onClick={logoutFromAll}>Logout</button>
+                            </div>
+                        )
+                    }
+                    {
+                        !currentToken || loading && (
+                            <div className={detailsContainerStyle}>
+                                <h3>Loading...</h3>
+                                <button className={buttonStyle} onClick={login}>Go Back to Login Page</button>
+                            </div>
+                        )
+                    }
+                </div>
             </div>
+        </div>
     )
 }
 

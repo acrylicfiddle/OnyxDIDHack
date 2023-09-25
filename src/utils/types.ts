@@ -6,10 +6,14 @@ export type LoginProps = {
   setToken: Dispatch<SetStateAction<string>>
 }
 
-export type SocialLoginProps = {
-  socialProvider: OAuthProvider
-  network: string
+export interface OAuthLoginProps {
+  network: string;
 }
+
+export interface SocialSelectorProps {
+  socialProvider: OAuthProvider;
+}
+
 
 export type OptionType = {
   value: string;

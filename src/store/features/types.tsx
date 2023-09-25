@@ -1,3 +1,5 @@
+import { OAuthProvider } from "@magic-ext/oauth";
+
 export interface NetworkState {
     network: string;
 };
@@ -11,7 +13,11 @@ export interface tokenState {
 };
 
 export interface loginMethodState {
-    loginMethod: string | null;
+    loginMethod: OAuthProvider | null;
+};
+
+export interface emailOrHandleState {
+    emailOrHandle: string | undefined;
 };
 
 
@@ -29,4 +35,8 @@ export const initialTokenState: tokenState = {
 
 export const initialLoginMethodState: loginMethodState = {
     loginMethod : null
+};
+
+export const initialEmailOrHandleState: emailOrHandleState = {
+    emailOrHandle : undefined
 };

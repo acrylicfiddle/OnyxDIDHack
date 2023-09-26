@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
 import SideBar from './sidebar';
+import MintNFT from '../nft/nft-mint';
 
 export default function Auth() {
     const [address, setAddress] = useState<string>("")
@@ -109,11 +110,12 @@ export default function Auth() {
                 <div className='dashboard-content-container'>
 
                     {
-                        !!smartAccount && currentToken && (
+                        !!smartAccount && currentToken && provider && (
                             <div className='dashboard-box'>
-                            <h3 className='wallet-text'>Smart account address:</h3>
-                            <p className='wallet-text'>{address}</p>
-                            <button className={buttonStyle} onClick={logoutFromAll}>Logout</button>
+                                <h3 className='wallet-text'>Smart account address:</h3>
+                                <p className='wallet-text'>{address}</p>
+                                <button className={buttonStyle} onClick={logoutFromAll}>Logout</button>
+                                <MintNFT smartAccount={smartAccount} address={address} provider={provider}/>
                             </div>
                         )
                     }

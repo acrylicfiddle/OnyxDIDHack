@@ -1,0 +1,161 @@
+
+import { useEffect, useState } from 'react';
+import { ethers } from "ethers";
+import SeamlessNftAbi from "../../utils/seamless-nft-abi.json"
+import { 
+IHybridPaymaster, 
+SponsorUserOperationDto,
+PaymasterMode
+} from '@biconomy/paymaster'
+import { BiconomySmartAccount } from "@biconomy/account"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { css } from '@emotion/css'
+import { getNftContractAddress } from '../../utils/nft-address';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+
+interface Props {
+    smartAccount: BiconomySmartAccount,
+    address: string,
+    provider: ethers.providers.Web3Provider,
+}
+
+const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
+    const [minted, setMinted] = useState(false);
+    const network = useSelector((state: RootState) => state.network.network);
+    const nftAddress = getNftContractAddress(network);
+    const contract = new ethers.Contract(
+        nftAddress,
+        SeamlessNftAbi,
+        provider,
+    );
+    console.log('contract is ', contract);
+    const handleTx = async () => {
+        try {
+            toast.info('Minting your Seamless NFT...', {
+                position: "top-right",
+                autoClose: 15000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            const mintTx = await contract.populateTransaction.mint(1);
+            console.log(mintTx.data);
+            const tx1 = {
+                to: nftAddress,
+                data: mintTx.data,
+            };
+            console.log("here before userop")
+            let userOp = await smartAccount.buildUserOp([tx1]);
+            console.log({ userOp })
+            const biconomyPaymaster =
+                smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
+            let paymasterServiceData: SponsorUserOperationDto = {
+                mode: PaymasterMode.SPONSORED,
+            };
+            const paymasterAndDataResponse =
+            await biconomyPaymaster.getPaymasterAndData(
+                userOp,
+                paymasterServiceData
+            );
+            
+            userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
+            const userOpResponse = await smartAccount.sendUserOp(userOp);
+            console.log("userOpHash", userOpResponse);
+            const { receipt } = await userOpResponse.wait(1);
+            console.log("txHash", receipt.transactionHash);
+            setMinted(true)
+            toast.success(`Success! Here is your transaction:${receipt.transactionHash} `, {
+                position: "top-right",
+                autoClose: 18000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        } catch (err: any) {
+            console.error(err);
+            console.log(err)
+        }
+    }
+
+    const OpenseaLink: React.FC<{ provider: ethers.providers.Web3Provider, contract: ethers.Contract, address: string }> = ({ provider, contract, address }) => {
+        const [tokenId, setTokenId] = useState(null);
+        const networkName = network === 'ethereum-goerli' ? 'goerli' : 'mumbai';
+        
+        useEffect(() => {
+            const fetchTokenId = async () => {
+                try {
+                    const id = await contract.tokenOfOwnerByIndex(address, 0);
+                    setTokenId(id);
+                } catch (error) {
+                    console.error('Error fetching token ID:', error);
+                }
+            };
+            
+            fetchTokenId();
+        }, [provider, address, contract]);
+        
+        if (!tokenId) return null;
+        
+        const url = `https://testnets.opensea.io/assets/${networkName}/${contract.address}/${tokenId}`;
+        
+        return (
+            <div className='opensea-link'>
+                <p>Congrats! Check your NFT at&nbsp;
+                    <a 
+                        href={url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ color: '#ff0000', textDecoration: 'underline' }}
+                    >
+                        Opensea
+                    </a>
+                </p>
+            </div>
+        );
+    }
+    
+    return(
+        <>
+            {address && <button onClick={handleTx} className={buttonStyle}>Mint NFT</button>}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
+            {minted && <OpenseaLink provider={provider} contract={contract} address={address} />}
+        </>
+    )
+}
+
+
+const buttonStyle = css`
+  padding: 14px;
+  width: 300px;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  outline: none;
+  margin-top: 20px;
+  transition: all .25s;
+  &:hover {
+    background-color: rgba(0, 0, 0, .2); 
+  }
+`
+
+export default MintNFT;
+

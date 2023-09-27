@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import SeamlessNftAbi from "../../utils/seamless-nft-abi.json"
-import { 
-IHybridPaymaster, 
+import {
+IHybridPaymaster,
 SponsorUserOperationDto,
 PaymasterMode
 } from '@biconomy/paymaster'
@@ -14,6 +14,7 @@ import { css } from '@emotion/css'
 import { getNftContractAddress } from '../../utils/nft-address';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import Button from '../Button';
 
 interface Props {
     smartAccount: BiconomySmartAccount,
@@ -62,7 +63,7 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
                 userOp,
                 paymasterServiceData
             );
-            
+
             userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
             const userOpResponse = await smartAccount.sendUserOp(userOp);
             console.log("userOpHash", userOpResponse);
@@ -88,7 +89,7 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
     const OpenseaLink: React.FC<{ provider: ethers.providers.Web3Provider, contract: ethers.Contract, address: string }> = ({ provider, contract, address }) => {
         const [tokenId, setTokenId] = useState(null);
         const networkName = network === 'ethereum-goerli' ? 'goerli' : 'mumbai';
-        
+
         useEffect(() => {
             const fetchTokenId = async () => {
                 try {
@@ -98,20 +99,20 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
                     console.error('Error fetching token ID:', error);
                 }
             };
-            
+
             fetchTokenId();
         }, [provider, address, contract]);
-        
+
         if (!tokenId) return null;
-        
+
         const url = `https://testnets.opensea.io/assets/${networkName}/${contract.address}/${tokenId}`;
-        
+
         return (
             <div className='opensea-link'>
                 <p>Congrats! Check your NFT at&nbsp;
-                    <a 
-                        href={url} 
-                        target="_blank" 
+                    <a
+                        href={url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#ff0000', textDecoration: 'underline' }}
                     >
@@ -121,10 +122,10 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
             </div>
         );
     }
-    
+
     return(
         <>
-            {address && <button onClick={handleTx} className={buttonStyle}>Mint NFT</button>}
+            {address && <Button onClick={handleTx} >Mint NFT</Button>}
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -142,20 +143,6 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
     )
 }
 
-
-const buttonStyle = css`
-  padding: 14px;
-  width: 300px;
-  border: none;
-  cursor: pointer;
-  border-radius: 999px;
-  outline: none;
-  margin-top: 20px;
-  transition: all .25s;
-  &:hover {
-    background-color: rgba(0, 0, 0, .2); 
-  }
-`
 
 export default MintNFT;
 

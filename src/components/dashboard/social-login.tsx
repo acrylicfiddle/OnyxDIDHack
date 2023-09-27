@@ -14,6 +14,8 @@ import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
 import SideBar from './sidebar';
 import MintNFT from '../nft/nft-mint';
+import Button from '../Button';
+import ClaimVerifiableCredential from '../claimVerifiableCredential/claim-verifiable-credential';
 
 export default function Auth() {
     const [address, setAddress] = useState<string>("")
@@ -114,8 +116,10 @@ export default function Auth() {
                             <div className='dashboard-box'>
                                 <h3 className='wallet-text'>Smart account address:</h3>
                                 <p className='wallet-text'>{address}</p>
-                                <button className={buttonStyle} onClick={logoutFromAll}>Logout</button>
+                                <Button onClick={logoutFromAll}>Logout</Button>
                                 <MintNFT smartAccount={smartAccount} address={address} provider={provider}/>
+                                <ClaimVerifiableCredential address={address} />
+
                             </div>
                         )
                     }
@@ -123,7 +127,7 @@ export default function Auth() {
                         !currentToken || loading && (
                             <div className={detailsContainerStyle}>
                                 <h3>Loading...</h3>
-                                <button className={buttonStyle} onClick={login}>Go Back to Login Page</button>
+                                <Button onClick={login}>Go Back to Login Page</Button>
                             </div>
                         )
                     }
@@ -136,20 +140,5 @@ export default function Auth() {
 
 const detailsContainerStyle = css`
   margin-top: 10px;
-`
-
-const buttonStyle = css`
-  margin: 10px auto; 
-  padding: 14px;
-  width: 300px;
-  border: none;
-  cursor: pointer;
-  border-radius: 999px;
-  outline: none;
-  margin-top: 20px;
-  transition: all .25s;
-  &:hover {
-    background-color: rgba(0, 0, 0, .2); 
-  }
 `
 

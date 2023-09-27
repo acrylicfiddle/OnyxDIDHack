@@ -15,6 +15,7 @@
     "@biconomy/core-types": "^3.0.0",
     "@biconomy/paymaster": "^3.0.0",
     "@emotion/css": "^11.11.2",
+    "@jpmorganchase/onyx-ssi-sdk": "^0.0.1",
     "@magic-ext/auth": "^3.0.1",
     "@magic-ext/oauth": "^12.4.1",
     "@reduxjs/toolkit": "^1.9.5",

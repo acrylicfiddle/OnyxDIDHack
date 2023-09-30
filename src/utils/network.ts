@@ -5,6 +5,7 @@ export enum Network {
   POLYGON = 'polygon',
   ETHEREUM_GOERLI = 'ethereum-goerli',
   ETHEREUM = 'ethereum',
+  ZKSYNC_ERA_TESTNET = 'zksync-era-testnet',
 }
 
 export const getNetworkUrl = (network: string) => {
@@ -17,6 +18,8 @@ export const getNetworkUrl = (network: string) => {
       return `https://eth-goerli.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
     case Network.ETHEREUM:
       return `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
+    case Network.ZKSYNC_ERA_TESTNET:
+      return 'https://testnet.era.zksync.dev';
     default:
       throw new Error('Network not supported');
   }
@@ -32,6 +35,8 @@ export const getChainId = (network: string) => {
       return 5;
     case Network.ETHEREUM:
       return 1;
+    case Network.ZKSYNC_ERA_TESTNET:
+      return 280;
   }
 };
 
@@ -91,6 +96,8 @@ export const getBlockExplorer = (network: string, address: string) => {
       return `https://etherscan.io/address/${address}`;
     case Network.ETHEREUM_GOERLI:
       return `https://goerli.etherscan.io/address/${address}`;
+    case Network.ZKSYNC_ERA_TESTNET:
+      return `https://goerli.explorer.zksync.io/address/${address}`;
   }
 };
 

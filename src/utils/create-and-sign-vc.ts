@@ -5,14 +5,20 @@ import {
 import { privateKeyBufferFromString } from "./convertions";
 
 export const createVc = async (address: string) => {
+  console.log(process.env.NEXT_PUBLIC_ISSUER_EDDSA_PRIVATE_KEY);
+
   const didKey = new KeyDIDMethod();
 
   const issuerDidWithKeys = await didKey.generateFromPrivateKey(
-    privateKeyBufferFromString(process.env.ISSUER_EDDSA_PRIVATE_KEY || "")
+    privateKeyBufferFromString(
+      process.env.NEXT_PUBLIC_ISSUER_EDDSA_PRIVATE_KEY || ""
+    )
   );
 
   const holderDidWithKeys = await didKey.generateFromPrivateKey(
-    privateKeyBufferFromString(process.env.HOLDER_EDDSA_PRIVATE_KEY || "")
+    privateKeyBufferFromString(
+      process.env.NEXT_PUBLIC_HOLDER_EDDSA_PRIVATE_KEY || ""
+    )
   );
 
   const vcDidKey = (await didKey.create()).did;

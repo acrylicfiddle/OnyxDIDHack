@@ -26,34 +26,34 @@ type MagicProviderProps = {
 export const useMagic = () => useContext(MagicContext);
 
 const MagicProvider = ({ children }: MagicProviderProps) => {
-  const [magic, setMagic] = useState<Magic | null>(null);
-  const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
-  const network = useSelector((state: RootState) => state.network.network);
+    const [magic, setMagic] = useState<Magic | null>(null);
+    const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
+    const network = useSelector((state: RootState) => state.network.network);
 
-  useEffect(() => {
-    if (process.env.NEXT_PUBLIC_MAGIC_API_KEY) {
-      const magic = new MagicBase(process.env.NEXT_PUBLIC_MAGIC_API_KEY as string, {
-        network: {
-          rpcUrl: getNetworkUrl(network),
-          chainId: getChainId(network),
-        },
-        extensions: [new AuthExtension(), new OAuthExtension()],
-      });
-      console.log("MagicProvider: ", { magic })
-      setMagic(magic);
-      setProvider(new ethers.providers.Web3Provider((magic as any).rpcProvider));
-      console.log("Provider: ", { provider })
-    }
-  }, []);
+    useEffect(() => {
+        if (process.env.NEXT_PUBLIC_MAGIC_API_KEY) {
+            const magic = new MagicBase(process.env.NEXT_PUBLIC_MAGIC_API_KEY as string, {
+                network: {
+                    rpcUrl: getNetworkUrl(network),
+                    chainId: getChainId(network),
+                },
+                extensions: [new AuthExtension(), new OAuthExtension()],
+            });
+            console.log("MagicProvider: ", { magic })
+            setMagic(magic);
+            setProvider(new ethers.providers.Web3Provider((magic as any).rpcProvider));
+            console.log("Provider: ", { provider })
+        }
+    }, []);
 
-  const value = useMemo(() => {
-    return {
-      magic,
-      provider,
-    };
-  }, [magic, provider]);
+    const value = useMemo(() => {
+        return {
+            magic,
+            provider,
+        };
+    }, [magic, provider]);
 
-  return <MagicContext.Provider value={value}>{children}</MagicContext.Provider>;
+    return <MagicContext.Provider value={value}>{children}</MagicContext.Provider>;
 };
 
 export default MagicProvider;

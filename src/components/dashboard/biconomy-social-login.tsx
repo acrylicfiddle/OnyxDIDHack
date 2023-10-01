@@ -12,12 +12,11 @@ import { getPaymasterURLPerNetwork, getBiconomyChainId } from '../../utils/netwo
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
-import SideBar from './sidebar';
-import MintNFT from '../nft/nft-mint';
+import MintNFT from '../nft/biconomy-nft-mint';
 import Button from '../Button';
 import ClaimVerifiableCredential from '../claimVerifiableCredential/claim-verifiable-credential';
 
-export default function Auth() {
+export default function BiconomyAuth() {
     const [address, setAddress] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [interval, enableInterval] = useState(false)
@@ -25,10 +24,12 @@ export default function Auth() {
     const { magic, provider } = useMagic();
     const router = useRouter();
     const network = useSelector((state: RootState) => state.network.network);
+    console.log("network: ", network)
     console.log({ magic, provider })
     const dispatch = useDispatch();
+    const chainId = getBiconomyChainId(network);
     const bundler: IBundler = new Bundler({
-        bundlerUrl: 'https://bundler.biconomy.io/api/v2/5/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44',    // Global bundler
+        bundlerUrl: `https://bundler.biconomy.io/api/v2/${chainId}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,    // Global bundler
         chainId: getBiconomyChainId(network),
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     });
@@ -105,35 +106,28 @@ export default function Auth() {
     
 
     return (
-        <div className='dashboard-page'>
-            <SideBar />
-            <div className='dashboard-container'>
-                <h1 className='dashboard-title'>Dashboard</h1>
-                <div className='dashboard-content-container'>
+            <div>
+                {
+                    !!smartAccount && currentToken && provider && (
+                        <div className='dashboard-box'>
+                            <h3 className='wallet-text'>Smart account address:</h3>
+                            <p className='wallet-text'>{address}</p>
+                            <Button onClick={logoutFromAll}>Logout</Button>
+                            <MintNFT smartAccount={smartAccount} address={address} provider={provider}/>
+                            <ClaimVerifiableCredential address={address} />
 
-                    {
-                        !!smartAccount && currentToken && provider && (
-                            <div className='dashboard-box'>
-                                <h3 className='wallet-text'>Smart account address:</h3>
-                                <p className='wallet-text'>{address}</p>
-                                <Button onClick={logoutFromAll}>Logout</Button>
-                                <MintNFT smartAccount={smartAccount} address={address} provider={provider}/>
-                                <ClaimVerifiableCredential address={address} />
-
-                            </div>
-                        )
-                    }
-                    {
-                        !currentToken || loading && (
-                            <div className={detailsContainerStyle}>
-                                <h3>Loading...</h3>
-                                <Button onClick={login}>Go Back to Login Page</Button>
-                            </div>
-                        )
-                    }
-                </div>
+                        </div>
+                    )
+                }
+                {
+                    !currentToken || loading && (
+                        <div className={detailsContainerStyle}>
+                            <h3>Loading...</h3>
+                            <Button onClick={login}>Go Back to Login Page</Button>
+                        </div>
+                    )
+                }
             </div>
-        </div>
     )
 }
 

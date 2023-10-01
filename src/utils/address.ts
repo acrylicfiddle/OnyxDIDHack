@@ -7,3 +7,6 @@ export const getNftContractAddress = (network: string) => {
         throw new Error(`Unsupported network: ${network}`);
     }
 }
+
+export const ZKSYNC_AAFACTORY_ADDRESS = '0x0ee2ec442E758f55218911f654CfB57f4616aeFA';
+export const ZKSYNC_PAYMASTER_ADDRESS = '0x0678F69E97E5fAB19a9188DFC8349b622c46A28D';

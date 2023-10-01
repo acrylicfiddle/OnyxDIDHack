@@ -7,10 +7,11 @@ import MagicProvider from './magic-provider';
 const NETWORKS = [
 	{ value: "ethereum-goerli", name: "Ethereum Goerli" },
 	{ value: "polygon-mumbai", name: "Polygon Mumbai" },
+    { value: "zksync-era-testnet", name: "zkSync Era Testnet"}
 ];
 
 const MagicLogin = () =>  {
-    const [network, setNetwork] = useState('ethereum-goerli');
+    const [network, setNetwork] = useState('');
 
     const NetworkSelectBox: React.FC<NetworkSelectBoxProps> = (props) => {
         const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

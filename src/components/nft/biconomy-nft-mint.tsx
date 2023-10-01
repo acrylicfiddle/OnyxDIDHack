@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { ethers } from "ethers";
-import SeamlessNftAbi from "../../utils/seamless-nft-abi.json"
+import SeamlessNftAbi from "@/utils/abi/seamless-nft-abi.json"
 import {
 IHybridPaymaster,
 SponsorUserOperationDto,
@@ -10,8 +10,7 @@ PaymasterMode
 import { BiconomySmartAccount } from "@biconomy/account"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { css } from '@emotion/css'
-import { getNftContractAddress } from '../../utils/nft-address';
+import { getNftContractAddress } from '@/utils/address';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Button from '../Button';

@@ -13,45 +13,10 @@ import { RootState } from '@/store/store';
 const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
     const { magic } = useMagic();
     const router = useRouter();
-    const { provider, state, scope, magic_oauth_request_id, magic_credential } = router.query;
     const dispatch = useDispatch();
     let [socialProvider, setSocialProvider] = useState<OAuthProvider | null>(null);
-    const selectedSocialProvider = useSelector((state: RootState) => state.loginMethod.loginMethod);
 
-    useEffect(() => {
-        if (router.isReady && provider && state && scope && magic_oauth_request_id && magic_credential) {
-            const processOAuthResult = async () => {
-                try {
-                    const result = await magic?.oauth.getRedirectResult();
-                    if (!result) {
-                        console.log('OAuth result is null');
-                        throw new Error('OAuth result is null');
-                    }
-                    if (!result.oauth.provider) {
-                        console.log('Social Provider is null');
-                        throw new Error('Social Provider is null');
-                    }
-                    console.log("Result: ", result);
-                    dispatch(setUser(result.magic.userMetadata.publicAddress));
-                    dispatch(setToken(result.oauth.accessToken));
-                    dispatch(setLoginMethod(result.oauth.provider));
-                    if (socialProvider === 'twitter' && result.oauth.userInfo.preferredUsername !== undefined) {
-                        dispatch(setEmailOrHandle(result.oauth.userInfo.preferredUsername));
-                    } else if (result.oauth.userInfo.email !== undefined) {
-                        dispatch(setEmailOrHandle(result.oauth.userInfo.email));
-                    }
-
-                } catch (e) {
-                    console.log('OAuth result processing error: ' + JSON.stringify(e));
-                }
-            };
-
-            processOAuthResult();
-          
-            router.push('/dashboard');
-
-        }
-    }, [router, provider, state, scope, magic_oauth_request_id, magic_credential]);
+    
     
     function isSelected(selectedSocialProvider: OAuthProvider) {
         return socialProvider === selectedSocialProvider;
@@ -63,14 +28,15 @@ const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
                 console.log('Social Provider is null');
                 throw new Error('Social Provider is null');
             }
-            dispatch(setLoginMethod(socialProvider));
-            dispatch(setNetwork(network));
+            await dispatch(setLoginMethod(socialProvider));
+            await dispatch(setNetwork(network));
+            console.log("This is the network: ", network);
             await magic?.oauth.loginWithRedirect({
                 provider: socialProvider,
                 // for local testing
-                // redirectURI: 'http://localhost:3000/sign-up/', 
-                redirectURI: 'https://onyx-did-hack.vercel.app/sign-up/',
-            })           
+                redirectURI: 'http://localhost:3000/dashboard/', 
+                // redirectURI: 'https://onyx-did-hack.vercel.app/sign-up/',
+            })
         } catch (e) {
             console.log('login error: ' + JSON.stringify(e));
         }

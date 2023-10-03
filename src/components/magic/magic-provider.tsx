@@ -6,12 +6,13 @@ import { ReactNode, createContext, useContext, useEffect, useMemo, useState } fr
 import { ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { Web3Provider } from 'zksync-web3';
 
 export type Magic = MagicBase<AuthExtension & OAuthExtension[]>;
 
 type MagicContextType = {
   magic: Magic | null;
-  provider: ethers.providers.Web3Provider | null;
+  provider: ethers.providers.Web3Provider | Web3Provider | null;
 };
 
 const MagicContext = createContext<MagicContextType>({
@@ -27,7 +28,7 @@ export const useMagic = () => useContext(MagicContext);
 
 const MagicProvider = ({ children }: MagicProviderProps) => {
     const [magic, setMagic] = useState<Magic | null>(null);
-    const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
+    const [provider, setProvider] = useState<ethers.providers.Web3Provider | Web3Provider | null>(null);
     const network = useSelector((state: RootState) => state.network.network);
 
     useEffect(() => {
@@ -41,7 +42,12 @@ const MagicProvider = ({ children }: MagicProviderProps) => {
             });
             console.log("MagicProvider: ", { magic })
             setMagic(magic);
-            setProvider(new ethers.providers.Web3Provider((magic as any).rpcProvider));
+            if (network == 'zksync-era-testnet' ) {
+                setProvider(new Web3Provider((magic as any).rpcProvider));
+            } else {
+                setProvider(new ethers.providers.Web3Provider((magic as any).rpcProvider));
+            }
+            
             console.log("Provider: ", { provider })
         }
     }, []);

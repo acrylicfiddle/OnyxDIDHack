@@ -14,17 +14,22 @@ import { getNftContractAddress } from '@/utils/address';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Button from '../Button';
+import { useMagic } from '../magic/magic-provider';
 
 interface Props {
     smartAccount: BiconomySmartAccount,
     address: string,
-    provider: ethers.providers.Web3Provider,
 }
 
-const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
+const MintNFT: React.FC<Props> = ({ smartAccount, address }) => {
     const [minted, setMinted] = useState(false);
     const network = useSelector((state: RootState) => state.network.network);
     const nftAddress = getNftContractAddress(network);
+    const { provider } = useMagic();
+    if (!provider) {
+        console.error('provider is undefined');
+        return;
+    }
     const contract = new ethers.Contract(
         nftAddress,
         SeamlessNftAbi,
@@ -85,7 +90,7 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
         }
     }
 
-    const OpenseaLink: React.FC<{ provider: ethers.providers.Web3Provider, contract: ethers.Contract, address: string }> = ({ provider, contract, address }) => {
+    const OpenseaLink: React.FC<{ contract: ethers.Contract, address: string }> = ({ contract, address }) => {
         const [tokenId, setTokenId] = useState(null);
         const networkName = network === 'ethereum-goerli' ? 'goerli' : 'mumbai';
 
@@ -100,7 +105,7 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
             };
 
             fetchTokenId();
-        }, [provider, address, contract]);
+        }, [address, contract]);
 
         if (!tokenId) return null;
 
@@ -137,7 +142,7 @@ const MintNFT: React.FC<Props> = ({ smartAccount, address, provider }) => {
                 pauseOnHover
                 theme="dark"
             />
-            {minted && <OpenseaLink provider={provider} contract={contract} address={address} />}
+            {minted && <OpenseaLink contract={contract} address={address} />}
         </>
     )
 }

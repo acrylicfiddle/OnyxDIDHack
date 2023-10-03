@@ -1,34 +1,49 @@
-import { utils, Wallet, Provider, EIP712Signer, types } from "zksync-web3";
+import { utils, Provider, Contract, EIP712Signer, types } from "zksync-web3";
 import { ethers } from "ethers";
 import AAFactoryAbi from "./abi/aafactory-abi.json";
 import { ZKSYNC_AAFACTORY_ADDRESS, ZKSYNC_PAYMASTER_ADDRESS } from "./address";
-import { getPaymasterParams } from "./paymaster";
+import { getPrePaymasterParams } from "./get-paymaster-param";
+
 
 const provider = new Provider("https://testnet.era.zksync.dev");
 
-export default async function deployZkSyncAccount (signer:  ethers.Signer, salt: string) {
-    const platformWallet = new Wallet(process.env.PLATFORM_PRIVATE_KEY?? "", provider);
+export default async function deployZkSyncAccount (signer: ethers.providers.JsonRpcSigner, salt: string) {
+    const paymasterParams = await getPrePaymasterParams(signer);
     const owner = await signer.getAddress();
-    const message = ethers.utils.arrayify(ethers.utils.id(owner));
-    const signature = await platformWallet.signMessage(message);
-    const input = ethers.utils.hexConcat([signature, message]);
-    const paymasterParams = getPaymasterParams(ZKSYNC_PAYMASTER_ADDRESS, {
-        paymasterInput: input
-    });
-
-    const aaFactory = new ethers.Contract(ZKSYNC_AAFACTORY_ADDRESS, AAFactoryAbi, signer);
-
+    const aaFactory = new Contract(ZKSYNC_AAFACTORY_ADDRESS, AAFactoryAbi, signer);
+    console.log(aaFactory);
     // deploy account
-    await (
-        await aaFactory.deployAccount(salt, owner, {
-            // paymaster info
-            customData: {
-                paymasterParams: paymasterParams,
-                gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
-            },
-            }
-        )
-    ).wait();
+    let tx = await aaFactory.populateTransaction.deployAccount(salt, owner);
+  
+    tx = {
+        ...tx,
+        chainId: 280,
+        customData: {
+            paymasterParams: paymasterParams,
+            gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+        } as types.Eip712Meta,
+    }
+    console.log(tx);
+    // const signedTxHash = EIP712Signer.getSignedDigest(tx);
+    // const signature = await signer.signMessage(ethers.utils.arrayify(signedTxHash));
+
+    // tx.customData = {
+    //     ...tx.customData,
+    //     customSignature: signature,
+    // };
+    let txSent = await signer.sendTransaction(tx);
+    const receipt = await txSent.wait();
+    console.log('Tx Receipt: ', receipt);
+    // await (
+    //     await aaFactory.connect(signer).deployAccount(salt, owner, {
+    //         // paymaster info
+    //         customData: {
+    //             paymasterParams: paymasterParams,
+    //             gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+    //         } as types.Eip712Meta,
+    //         }
+    //     )
+    // ).wait();
 
     // Getting the address of the deployed contract account
     const abiCoder = new ethers.utils.AbiCoder();

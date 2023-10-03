@@ -15,6 +15,7 @@ import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../
 import MintNFT from '../nft/biconomy-nft-mint';
 import Button from '../Button';
 import ClaimVerifiableCredential from '../claimVerifiableCredential/claim-verifiable-credential';
+import { Web3Provider } from 'zksync-web3';
 
 export default function BiconomyAuth() {
     const [address, setAddress] = useState<string>("")
@@ -113,7 +114,7 @@ export default function BiconomyAuth() {
                             <h3 className='wallet-text'>Smart account address:</h3>
                             <p className='wallet-text'>{address}</p>
                             <Button onClick={logoutFromAll}>Logout</Button>
-                            <MintNFT smartAccount={smartAccount} address={address} provider={provider}/>
+                            <MintNFT smartAccount={smartAccount} address={address}/>
                             <ClaimVerifiableCredential address={address} />
 
                         </div>

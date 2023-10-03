@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
-// import MintNFT from '../nft/biconomy-nft-mint';
+import MintZkSyncNFT from '../nft/zksync-nft-mint';
 import Button from '../Button';
 import ClaimVerifiableCredential from '../claimVerifiableCredential/claim-verifiable-credential';
 import { ethers } from 'ethers';
@@ -126,7 +126,7 @@ export default function ZkSyncAuth() {
                             <h3 className='wallet-text'>Smart account address:</h3>
                             <p className='wallet-text'>{address}</p>
                             <Button onClick={logoutFromAll}>Logout</Button>
-                            {/* <MintNFT smartAccount={smartAccount} address={address} provider={provider}/> */}
+                            <MintZkSyncNFT address={address}/>
                             <ClaimVerifiableCredential address={address} />
 
                         </div>

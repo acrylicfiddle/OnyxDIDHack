@@ -11,7 +11,7 @@ const NETWORKS = [
 ];
 
 const MagicLogin = () =>  {
-    const [network, setNetwork] = useState('');
+    const [network, setNetwork] = useState('ethereum-goerli');
 
     const NetworkSelectBox: React.FC<NetworkSelectBoxProps> = (props) => {
         const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

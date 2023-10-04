@@ -33,8 +33,8 @@ const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
             await magic?.oauth.loginWithRedirect({
                 provider: socialProvider,
                 // for local testing
-                redirectURI: 'http://localhost:3000/dashboard/', 
-                // redirectURI: 'https://onyx-did-hack.vercel.app/dashboard/',
+                // redirectURI: 'http://localhost:3000/dashboard/', 
+                redirectURI: 'https://onyx-did-hack.vercel.app/dashboard/',
             })
         } catch (e) {
             console.log('login error: ' + JSON.stringify(e));

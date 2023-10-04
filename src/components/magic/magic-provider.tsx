@@ -29,7 +29,10 @@ export const useMagic = () => useContext(MagicContext);
 const MagicProvider = ({ children }: MagicProviderProps) => {
     const [magic, setMagic] = useState<Magic | null>(null);
     const [provider, setProvider] = useState<ethers.providers.Web3Provider | Web3Provider | null>(null);
-    const network = useSelector((state: RootState) => state.network.network);
+    let network = useSelector((state: RootState) => state.network.network);
+    if (network == '') {
+        network = 'ethereum-goerli';
+    }
 
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_MAGIC_API_KEY) {

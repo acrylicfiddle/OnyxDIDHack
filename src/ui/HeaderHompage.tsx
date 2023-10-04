@@ -6,6 +6,9 @@ function Header() {
     const handleHome = () => {
         router.push('/');
     };
+    const handleLogin = () => {
+        router.push('/sign-up');
+    };
 
     return (
         <header className="header">
@@ -16,7 +19,7 @@ function Header() {
                 <Link href="https://github.com/acrylicfiddle/OnyxDIDHack" className='nav-link'>
                     Documentation
                 </Link>
-                <button className="login-home-button">Login</button>
+                <button className="login-home-button" onClick={handleLogin}>Login</button>
             </nav>
         </header>
     );

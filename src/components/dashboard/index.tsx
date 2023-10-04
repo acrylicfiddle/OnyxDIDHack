@@ -9,6 +9,7 @@ import { useMagic } from '../magic/magic-provider';
 import SocialAuth from './social-login';
 
 export default function DashboardPage() {
+    const [activeTab, setActiveTab] = useState('vc');
     const socialProvider = useSelector((state: RootState) => state.loginMethod.loginMethod);
     const dispatch = useDispatch();
     const network = useSelector((state: RootState) => state.network.network);
@@ -48,8 +49,8 @@ export default function DashboardPage() {
     return (
         <div className='dashboard-page'>
             <SideBar />
+            
             <div className='dashboard-container'>
-                <h1 className='dashboard-title'>Dashboard</h1>
                 <div>
                     <SocialAuth />
                 </div>

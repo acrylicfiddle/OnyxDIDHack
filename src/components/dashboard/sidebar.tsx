@@ -60,7 +60,7 @@ const SideBar = () => {
                 }
                 {isOpen && (
                     <ul>
-                        <div className='logout-button' onClick={handleLogout}>
+                        <div className='logout-button-sidebar' onClick={handleLogout}>
                             Logout
                         </div>
                     </ul>

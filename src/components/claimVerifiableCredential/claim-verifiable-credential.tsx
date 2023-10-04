@@ -10,7 +10,7 @@ const ClaimVerifiableCredential = ({ address }: { address: string }) => {
     setVcJwt(vcJwt);
   };
 
-  return vcJwt.length ? vcJwt : <Button onClick={handleClaim}>Claim VC</Button>;
+  return vcJwt.length ? vcJwt : <Button onClick={handleClaim}>+ Add New</Button>;
 };
 
 export default ClaimVerifiableCredential;

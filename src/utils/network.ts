@@ -66,7 +66,7 @@ export const getNetworkName = (network: string) => {
     case Network.ETHEREUM_GOERLI:
       return 'Ethereum (Goerli)';
     case Network.ZKSYNC_ERA_TESTNET:
-      return 'ZkSync Era (Testnet)';
+      return 'ZkSync (Testnet)';
   }
 };
 

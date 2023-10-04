@@ -7,7 +7,7 @@ import {
     BiconomyPaymaster,  
 } from '@biconomy/paymaster';
 import { useRouter } from 'next/router';
-import { getPaymasterURLPerNetwork, getBiconomyChainId } from '../../utils/network';
+import { getPaymasterURLPerNetwork, getBiconomyChainId, getNetworkName } from '../../utils/network';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
@@ -21,9 +21,11 @@ import { ZKSYNC_AAFACTORY_ADDRESS } from '@/utils/address';
 import { utils } from 'zksync-web3';
 import MintZkSyncNFT from '../nft/zksync-nft-mint';
 import { LoadingBox } from '@/ui/LoadingBox';
-
+import formatAddress from '@/utils/format-address';
+import { format } from 'path';
 
 export default function SocialAuth() {
+    const [activeTab, setActiveTab] = useState('vc');
     const [address, setAddress] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [interval, enableInterval] = useState(false)
@@ -154,30 +156,82 @@ export default function SocialAuth() {
         router.push('/sign-up');
     }
 
-    const isSmartAccount = isBiconomy? smartAccount : zkSmartAccount;
-    
+    const handleNFTTab = () => {
+        setActiveTab('nft');
+    };
+
+    const handleVCTab = () => {
+        setActiveTab('vc');
+    }
+
+    const isVC = activeTab === 'vc' ? 'active' : '';
+
+    const DashboardTabs = () => {
+        return (
+            <div className='flex flex-row w-100% mb-10'>
+                <button 
+                    className={`tabs ${activeTab === 'vc' ? 'active' : ''}`}
+                    onClick={handleVCTab}
+                >
+                    Credentials
+                </button>
+                <button 
+                    className={`tabs ${activeTab === 'nft' ? 'active' : ''}`}
+                    onClick={handleNFTTab}
+                >
+                    NFT
+                </button>
+            </div>
+        )
+    }    
 
     return (
             <div>
+                <div>
+                    <div className='dashboard-header-container'>
+                        <h1 className='dashboard-title'>Dashboard</h1>
+                        {
+                            address && provider && (
+                                <div className='flex flex-row'>
+                                    <div className='dashboard-header-subject'>
+                                        Wallet
+                                    </div>
+                                    <div className='wallet-text'>
+                                        {formatAddress(address)}
+                                    </div>
+                                    <div className='dashboard-header-subject'>
+                                        Blockchain
+                                    </div>
+                                    <div className='wallet-text'>
+                                        {getNetworkName(network)}
+                                    </div>
+                                    <div className='logout-button' onClick={logoutFromAll}>Change</div>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <DashboardTabs />
+                </div>
                 {
-                    !!smartAccount && provider && isBiconomy && (
+                    address && provider && isVC && (
                         <div className='dashboard-box'>
-                            <h3 className='wallet-text'>Smart account address:</h3>
-                            <p className='wallet-text'>{address}</p>
-                            <Button onClick={logoutFromAll}>Logout</Button>
-                            <MintNFT smartAccount={smartAccount} address={address}/>
+                            
                             <ClaimVerifiableCredential address={address} />
                         </div>
                     )
                 }
                 {
-                    !!zkSmartAccount && provider && !isBiconomy && (
+                    !!smartAccount && provider && isBiconomy && !isVC && (
                         <div className='dashboard-box'>
-                            <h3 className='wallet-text'>Smart account address:</h3>
-                            <p className='wallet-text'>{address}</p>
-                            <Button onClick={logoutFromAll}>Logout</Button>
+                            <MintNFT smartAccount={smartAccount} address={address}/>
+                        </div>
+
+                    )
+                }
+                {
+                    !!zkSmartAccount && provider && !isBiconomy && !isVC && (
+                        <div className='dashboard-box'>
                             <MintZkSyncNFT address={address}/>
-                            <ClaimVerifiableCredential address={address} />
                         </div>
                     )
                 }

@@ -15,8 +15,6 @@ const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
     const dispatch = useDispatch();
     let [socialProvider, setSocialProvider] = useState<OAuthProvider | null>(null);
 
-    
-    
     function isSelected(selectedSocialProvider: OAuthProvider) {
         return socialProvider === selectedSocialProvider;
     }

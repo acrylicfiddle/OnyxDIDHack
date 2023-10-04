@@ -1,13 +1,12 @@
 import { useMagic } from './magic-provider';
 import { OAuthLoginProps } from '../../utils/types';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser, setNetwork, setToken, setLoginMethod, setEmailOrHandle } from '../../store/features/rootSlice';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setNetwork, setLoginMethod } from '../../store/features/rootSlice';
 import { OAuthProvider } from '@magic-ext/oauth';
 import { getSVGPath, capitalize } from '../../utils/social';
 import { SocialSelectorProps } from '@/utils/types';
-import { RootState } from '@/store/store';
 
 
 const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
@@ -34,8 +33,8 @@ const OAuthSignUp: React.FC<OAuthLoginProps> = ({ network }) => {
             await magic?.oauth.loginWithRedirect({
                 provider: socialProvider,
                 // for local testing
-                // redirectURI: 'http://localhost:3000/dashboard/', 
-                redirectURI: 'https://onyx-did-hack.vercel.app/dashboard/',
+                redirectURI: 'http://localhost:3000/dashboard/', 
+                // redirectURI: 'https://onyx-did-hack.vercel.app/dashboard/',
             })
         } catch (e) {
             console.log('login error: ' + JSON.stringify(e));

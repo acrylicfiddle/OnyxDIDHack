@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getNftContractAddress } from '@/utils/address';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import Button from '../Button';
+import Button from '@/ui/Button';
 import { useMagic } from '../magic/magic-provider';
 
 interface Props {

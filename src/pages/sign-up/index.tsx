@@ -1,8 +1,13 @@
+import HeaderLogin from "@/ui/HeaderLogin";
 import MagicLogin from "../../components/magic";
 
 const Index = () => {
     return (
-        <MagicLogin />
+        <div>
+            <HeaderLogin />
+            <MagicLogin />
+        </div>
+        
     );
 };
 

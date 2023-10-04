@@ -9,10 +9,8 @@ import { getNftContractAddress } from "@/utils/address";
 import { toast, ToastContainer } from 'react-toastify';
 import { getPrePaymasterParams } from "@/utils/get-paymaster-param";
 import { utils, types, Provider, EIP712Signer } from "zksync-web3";
-import Button from "../Button";
+import Button from "@/ui/Button";
 import { useMagic } from "../magic/magic-provider";
-import { EIP712_TX_TYPE } from "zksync-web3/build/src/utils";
-import { splitSignature } from "ethers/lib/utils";
 
 interface Props {
     address: string,

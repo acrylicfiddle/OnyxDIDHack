@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from './sidebar';
-import BiconomyAuth from './biconomy-social-login';
-import ZkSyncAuth from './zksync-login';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { setUser, setNetwork, setToken, setLoginMethod, setEmailOrHandle } from '../../store/features/rootSlice';
+import { setUser, setToken, setLoginMethod, setEmailOrHandle } from '../../store/features/rootSlice';
 import { useMagic } from '../magic/magic-provider';
+import SocialAuth from './social-login';
 
 export default function DashboardPage() {
     const socialProvider = useSelector((state: RootState) => state.loginMethod.loginMethod);
     const dispatch = useDispatch();
     const network = useSelector((state: RootState) => state.network.network);
-    const isZkSync = network === 'zksync-era-testnet';
     const router = useRouter();
     const { magic } = useMagic();
     useEffect(() => {
@@ -52,9 +50,8 @@ export default function DashboardPage() {
             <SideBar />
             <div className='dashboard-container'>
                 <h1 className='dashboard-title'>Dashboard</h1>
-                <div className='dashboard-content-container'>
-                    {!isZkSync && <BiconomyAuth />}
-                    {isZkSync && <ZkSyncAuth />}
+                <div>
+                    <SocialAuth />
                 </div>
             </div>
         </div>

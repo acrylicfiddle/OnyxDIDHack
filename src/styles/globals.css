@@ -287,7 +287,7 @@ ul {
 }
 
 .landing-description {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 400;
   color: white;
   text-align: center;
@@ -316,12 +316,12 @@ ul {
 }
 
 .landing-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   color: white;
   text-align: center;
   margin: 0 0 1.25rem;
-  width: 45%;
+  width: 50%;
 }
 
 .landing-button {
@@ -549,6 +549,60 @@ ul {
   color: #000;
 }
 
+.header {
+  background-color: transparent;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-login {
+  background-color: transparent;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #ddd; /* Adjust hover color */
+  }
+}
+
+
+
+.login-home-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 24px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #E1E34B;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  transition: background-color 0.3s ease;
+  gap: 0px;
+  width: 50%;
+}
+
+
 
 .login-continue-button {
   display: flex;
@@ -583,6 +637,64 @@ ul {
   gap: 0px;
 }
 
+.logo-description-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 5%; 
+}
+
+.logo-description-item{
+  text-align: center;
+  color: #fff;
+  margin-bottom: 10vh;
+}
+
+.logo-description-text {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  margin: 0 0 1.25rem;
+  line-height: 15pt;
+}
+
+
+.logo-description-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  margin: 0 0 1.25rem;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  background-color: #E1E34B;
+  color: #000000;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  transition: background-color 0.3s ease;
+  gap: 0px;
+  width: 100%;
+  height: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.logout-button:hover:enabled {
+  background-color: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #a799ff;
+}
+
+.logo-login-container {
+
+}
+
 .parent-container {
   display: flex;
   align-items: center;
@@ -592,13 +704,27 @@ ul {
 }
 
 .sidebar {
-  width: 10%; 
+  width: 15%; 
   margin-right: 10%;
   background-color: #101623;
   color: #ecf0f1;
-  padding: 20px;
-  margin-top: 10vh;
-  height: 80vh;
+  padding-left: 20px;
+  margin-top: 0vh;
+  height: 90vh;
+  font-size: 0.9rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-email {
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  gap: 0.5rem;
 }
 
 .wallet-text {
@@ -696,12 +822,19 @@ ul {
 }
 
 .loading-container {
-  width: 3.125rem;
-  text-align: center;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  padding: 1rem;
+  background-color: #181E2C;
+  padding: 32px;
+  box-shadow: 0px 8px 12px rgba(11.90, 15.02, 22.31, 0.85);
+  border: 1px rgba(153, 153, 153, 0.25) solid;
+  border-radius: 8px;
   align-items: center;
   justify-content: center;
-  cursor: default;
 }
 
 .loading {

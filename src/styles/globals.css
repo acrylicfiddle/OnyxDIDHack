@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,9 +7,9 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -95,14 +95,13 @@ ul {
 }
 
 .active::before {
-  content: '\2022';
+  content: "\2022";
   color: #6851ff;
   font-weight: bold;
   display: inline-block;
   width: 1em;
   margin-left: -1em;
 }
-
 
 .cards-container {
   margin-top: -250px;
@@ -111,17 +110,13 @@ ul {
 
 @media only screen and (max-width: 767px) {
   .cards-container {
-      margin-top: -89px;
+    margin-top: -89px;
   }
 }
-
-
-
 
 .rotate {
   transform: rotate(180deg);
 }
-
 
 .network-select-box {
   margin: 0;
@@ -138,7 +133,7 @@ ul {
 }
 
 .network-select-box:focus {
-  border-color: #E1E34B;
+  border-color: #e1e34b;
 }
 
 .dashboard-container {
@@ -157,13 +152,15 @@ ul {
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
   padding: 1rem;
-  background-color: #181E2C;
+  background-color: #181e2c;
+  color: white;
   padding: 32px;
-  box-shadow: 0px 8px 12px rgba(11.90, 15.02, 22.31, 0.85);
+  box-shadow: 0px 8px 12px rgba(11.9, 15.02, 22.31, 0.85);
   border: 1px rgba(153, 153, 153, 0.25) solid;
   border-radius: 8px;
   margin-top: 10px;
   margin-bottom: 10vh;
+  overflow-wrap: break-word;
 }
 
 .dashboard-page {
@@ -205,7 +202,7 @@ ul {
   align-items: center;
   min-height: 100vh;
   position: relative;
-  background-image: url('/main.svg');
+  background-image: url("/main.svg");
   background-repeat: no-repeat;
   background-size: 100vw 320px;
 }
@@ -214,9 +211,9 @@ ul {
   width: 15%;
   height: 30vh;
   background-color: #101623;
-  background-image: radial-gradient(circle at 50% 50%, #E1E34B, #101623  50%); 
-  background-size: 100% 200%; 
-  background-position: 50% 100%; 
+  background-image: radial-gradient(circle at 50% 50%, #e1e34b, #101623 50%);
+  background-size: 100% 200%;
+  background-position: 50% 100%;
   align-items: center;
   background-repeat: no-repeat;
 }
@@ -272,9 +269,8 @@ ul {
   padding: 0.5rem 0.5rem;
   border-radius: 1000px;
   border: none;
-  background-color: #E1E34B;
+  background-color: #e1e34b;
 }
-
 
 .login-page {
   display: flex;
@@ -308,7 +304,7 @@ ul {
   font-weight: 400;
   color: white;
   text-align: left;
-  margin: 1.25rem 0 0.25rem; 
+  margin: 1.25rem 0 0.25rem;
 }
 
 .login-description-2 {
@@ -317,7 +313,6 @@ ul {
   color: white;
   text-align: left;
   margin: 1.25rem 0 0;
-  
 }
 
 .login-box {
@@ -326,9 +321,9 @@ ul {
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
   padding: 1rem;
-  background-color: #181E2C;
+  background-color: #181e2c;
   padding: 32px;
-  box-shadow: 0px 8px 12px rgba(11.90, 15.02, 22.31, 0.85);
+  box-shadow: 0px 8px 12px rgba(11.9, 15.02, 22.31, 0.85);
   border: 1px rgba(153, 153, 153, 0.25) solid;
   border-radius: 8px;
 }
@@ -336,9 +331,9 @@ ul {
 .login-hr {
   width: 100%;
   height: 1px;
-  background-color: #3B404C;
+  background-color: #3b404c;
   margin: 1.25rem 0 0.25rem;
-  color:#3B404C;
+  color: #3b404c;
 }
 
 .login-method-grid {
@@ -379,7 +374,7 @@ ul {
   padding: 0.75rem 0.5rem;
   border-radius: 1000px;
   border: none;
-  background-color: #E1E34B;
+  background-color: #e1e34b;
 }
 
 .login-button:disabled {
@@ -388,7 +383,8 @@ ul {
 
 .login-button:hover:enabled {
   cursor: pointer;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #a799ff;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)),
+    #a799ff;
 }
 
 .login-button:active:enabled {
@@ -402,7 +398,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 24px; 
+  padding: 8px 24px;
   background-color: #3a404b;
   color: #ffffff;
   border: none;
@@ -421,7 +417,7 @@ ul {
 }
 
 .oauth-button.selected {
-  background-color: #E1E34B;
+  background-color: #e1e34b;
   color: #000;
 }
 
@@ -465,7 +461,7 @@ ul {
   padding: 8px 24px;
   background-color: transparent;
   color: #fff;
-  border: 1px solid #E1E34B;
+  border: 1px solid #e1e34b;
   border-radius: 100px;
   cursor: pointer;
   font-size: 16px;
@@ -480,7 +476,7 @@ ul {
   display: flex;
   align-items: center;
   padding: 8px 24px;
-  background-color: #E1E34B;
+  background-color: #e1e34b;
   color: #000;
   border: none;
   border-radius: 100px;
@@ -497,7 +493,7 @@ ul {
   display: flex;
   align-items: center;
   padding: 8px 24px;
-  background-color: #181E2C;
+  background-color: #181e2c;
   color: #fff;
   border: none;
   border-radius: 100px;
@@ -511,11 +507,11 @@ ul {
 
 .logo-description-box {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 5%; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5%;
 }
 
-.logo-description-item{
+.logo-description-item {
   text-align: center;
   color: #fff;
   margin-bottom: 10vh;
@@ -530,7 +526,6 @@ ul {
   line-height: 15pt;
 }
 
-
 .logo-description-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -544,7 +539,7 @@ ul {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  color: #E1E34B;
+  color: #e1e34b;
   border: none;
   border-radius: 100px;
   cursor: pointer;
@@ -557,10 +552,13 @@ ul {
   height: 2rem;
 }
 
-
-
 .logout-button:hover {
-  background-color: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #a799ff;
+  background-color: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0.05)
+    ),
+    #a799ff;
   color: #e9eb89;
 }
 
@@ -569,7 +567,7 @@ ul {
   align-items: center;
   justify-content: center;
   padding: 8px 24px;
-  background-color: #E1E34B;
+  background-color: #e1e34b;
   color: #000000;
   border: none;
   border-radius: 100px;
@@ -585,7 +583,12 @@ ul {
 }
 
 .logout-button-sidebar:hover:enabled {
-  background-color: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), #a799ff;
+  background-color: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0.05)
+    ),
+    #a799ff;
 }
 
 .parent-container {
@@ -597,7 +600,7 @@ ul {
 }
 
 .sidebar {
-  width: 15%; 
+  width: 15%;
   margin-right: 10%;
   background-color: #101623;
   color: #ecf0f1;
@@ -616,7 +619,7 @@ ul {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  
+
   gap: 0.5rem;
 }
 
@@ -633,9 +636,9 @@ ul {
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
   padding: 1rem;
-  background-color: #181E2C;
+  background-color: #181e2c;
   padding: 32px;
-  box-shadow: 0px 8px 12px rgba(11.90, 15.02, 22.31, 0.85);
+  box-shadow: 0px 8px 12px rgba(11.9, 15.02, 22.31, 0.85);
   border: 1px rgba(153, 153, 153, 0.25) solid;
   border-radius: 8px;
   align-items: center;
@@ -652,7 +655,7 @@ ul {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 24px; 
+  padding: 8px 24px;
   background-color: transparent;
   color: #ffffff;
   border: none;
@@ -674,7 +677,6 @@ ul {
   background-color: #3a404b;
   color: #ffffff;
 }
-
 
 .toast {
   position: fixed;
@@ -713,6 +715,3 @@ ul {
 .opensea-link {
   color: #fff;
 }
-
-
-

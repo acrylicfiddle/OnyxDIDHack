@@ -1,6 +1,7 @@
 import {
   KeyDIDMethod,
   createAndSignCredentialJWT,
+  createCredential,
 } from "@jpmorganchase/onyx-ssi-sdk";
 import { privateKeyBufferFromString } from "./convertions";
 
@@ -38,15 +39,23 @@ export const createVc = async (address: string) => {
     `\nGenerating a signed verifiable Credential of type ${credentialType}\n`
   );
 
-  const signedVc = await createAndSignCredentialJWT(
-    issuerDidWithKeys,
+  // const signedVc = await createAndSignCredentialJWT(
+  //   issuerDidWithKeys,
+  //   holderDidWithKeys.did,
+  //   subjectData,
+  //   [credentialType],
+  //   additionalParams
+  // );
+
+  const vc: CredentialPayload = createCredential(
+    issuerDidWithKeys.did,
     holderDidWithKeys.did,
     subjectData,
     [credentialType],
     additionalParams
   );
 
-  console.log(signedVc);
+  // console.log(signedVc);
 
-  return signedVc;
+  return vc;
 };

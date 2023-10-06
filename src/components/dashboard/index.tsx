@@ -28,12 +28,16 @@ export default function DashboardPage() {
                 dispatch(setUser(result.magic.userMetadata.publicAddress));
                 dispatch(setToken(result.oauth.accessToken));
                 dispatch(setLoginMethod(result.oauth.provider));
-
+                let emailOrHandle: string = '';
                 if (socialProvider === 'twitter' && result.oauth.userInfo.preferredUsername !== undefined) {
-                    dispatch(setEmailOrHandle(result.oauth.userInfo.preferredUsername));
+                    emailOrHandle = result.oauth.userInfo.preferredUsername;
+                    dispatch(setEmailOrHandle(emailOrHandle));
                 } else if (socialProvider !== 'twitter' && result.oauth.userInfo.email !== undefined) {
-                    dispatch(setEmailOrHandle(result.oauth.userInfo.email));
+                    emailOrHandle = result.oauth.userInfo.email;
+                    dispatch(setEmailOrHandle(emailOrHandle));
                 }
+                
+                
                 
             } catch (e) {
                 console.log('OAuth result processing error: ' + JSON.stringify(e));

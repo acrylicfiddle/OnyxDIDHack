@@ -22,7 +22,8 @@ import { utils } from 'zksync-web3';
 import MintZkSyncNFT from '../nft/zksync-nft-mint';
 import { LoadingBox } from '@/ui/LoadingBox';
 import formatAddress from '@/utils/format-address';
-import { format } from 'path';
+import postLoginInfo from '@/utils/post-login-info';
+
 
 export default function SocialAuth() {
     const [activeTab, setActiveTab] = useState('vc');
@@ -35,6 +36,8 @@ export default function SocialAuth() {
     const router = useRouter();
     let network = useSelector((state: RootState) => state.network.network) ?? provider?.network?.name;
     const emailOrHandle = useSelector((state: RootState) => state.emailOrHandle.emailOrHandle);
+    const userAddr = useSelector((state: RootState) => state.user.user);
+    const loginMethod = useSelector((state: RootState) => state.loginMethod.loginMethod);
     console.log("network: ", network)
     console.log({ magic, provider })
     const dispatch = useDispatch();
@@ -61,7 +64,7 @@ export default function SocialAuth() {
     useEffect(() => {
         let configureLogin: NodeJS.Timeout;
         if (interval) {
-          configureLogin = setInterval(() => {
+          configureLogin = setInterval( async () => {
             if (!smartAccount) {
                 isBiconomy? setupSmartAccount() : setupZkSyncAccount();
                 clearInterval(configureLogin);
@@ -95,9 +98,11 @@ export default function SocialAuth() {
         try {
             let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig);
             biconomySmartAccount =  await biconomySmartAccount.init();
-            setAddress( await biconomySmartAccount.getSmartAccountAddress());
+            const scAddr = await biconomySmartAccount.getSmartAccountAddress() 
+            setAddress(scAddr);
             setSmartAccount(biconomySmartAccount);
             setLoading(false);
+            await postLoginInfo(emailOrHandle, userAddr, loginMethod, scAddr, network);
         } catch (error) {
           console.error(error);
         };
@@ -136,6 +141,7 @@ export default function SocialAuth() {
         setAddress(accountAddress);
         setZkSmartAccount(zkSmartAccount);
         setLoading(false);
+        await postLoginInfo(emailOrHandle, userAddr, loginMethod, accountAddress, network);
     };
 
     const login = async () => {
@@ -183,7 +189,7 @@ export default function SocialAuth() {
                 </button>
             </div>
         )
-    }    
+    }
 
     return (
             <div>

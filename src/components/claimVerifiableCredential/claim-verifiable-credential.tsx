@@ -4,7 +4,7 @@ import { createVc } from "../../utils/create-and-sign-vc";
 import { useState } from "react";
 
 const ClaimVerifiableCredential = ({ address }: { address: string }) => {
-  const [vcJwt, setVcJwt] = useState<CredentialPayload>();
+  const [vcJwt, setVcJwt] = useState<CredentialPayload[]>();
 
   const handleClaim = async () => {
     const vcJwt = await createVc(address);
@@ -12,9 +12,9 @@ const ClaimVerifiableCredential = ({ address }: { address: string }) => {
   };
 
   return vcJwt ? (
-    JSON.stringify(vcJwt)
+    JSON.stringify(vcJwt, null, 2)
   ) : (
-    <Button onClick={handleClaim}>+ Add New</Button>
+    <Button onClick={handleClaim}>Check my VCs</Button>
   );
 };
 

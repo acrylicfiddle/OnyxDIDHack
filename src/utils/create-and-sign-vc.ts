@@ -24,20 +24,14 @@ export const createVc = async (address: string) => {
 
   const vcDidKey = (await didKey.create()).did;
 
-  const credentialType = "PROOF_OF_ADDRESS";
-
-  const subjectData = {
-    address,
-  };
-
   //vc id, expirationDate, credentialStatus, credentialSchema, etc
   const additionalParams = {
     id: vcDidKey,
   };
 
-  console.log(
-    `\nGenerating a signed verifiable Credential of type ${credentialType}\n`
-  );
+  // console.log(
+  //   `\nGenerating a signed verifiable Credential of type ${credentialType}\n`
+  // );
 
   // const signedVc = await createAndSignCredentialJWT(
   //   issuerDidWithKeys,
@@ -47,15 +41,37 @@ export const createVc = async (address: string) => {
   //   additionalParams
   // );
 
-  const vc: CredentialPayload = createCredential(
+  const proofOfAddress = createCredential(
     issuerDidWithKeys.did,
     holderDidWithKeys.did,
-    subjectData,
-    [credentialType],
+    {
+      address,
+    },
+    ["PROOF_OF_ADDRESS"],
+    additionalParams
+  );
+
+  const proofOfParticipant = createCredential(
+    issuerDidWithKeys.did,
+    holderDidWithKeys.did,
+    {
+      OnyxHackathonParticipant: true,
+    },
+    ["PROOF_OF_ONYX_HACKATHON_PARTICIPANT"],
+    additionalParams
+  );
+
+  const proofOfDIDEnthusiast = createCredential(
+    issuerDidWithKeys.did,
+    holderDidWithKeys.did,
+    {
+      DIDEnthusiast: true,
+    },
+    ["PROOF_OF_DID_ENTHUSIAST"],
     additionalParams
   );
 
   // console.log(signedVc);
 
-  return vc;
+  return [proofOfAddress, proofOfParticipant, proofOfDIDEnthusiast];
 };

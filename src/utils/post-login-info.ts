@@ -13,22 +13,28 @@ async function postLoginInfo(
         return;
     }
     try {
-        try {
-            const checkLoginStatus = await fetch(`${API_URL}/name/${emailOrHandle}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const loginInfo = await checkLoginStatus.json();
-            console.log("Login status: ", loginInfo);
-            if (!loginInfo) {
-                if (loginInfo.network == network && loginInfo.loginMethod == loginMethod) {
+        const checkLoginStatus = await fetch(`${API_URL}name/${emailOrHandle}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        let loginInfo = await checkLoginStatus.json();
+    
+        console.log("Login status: ", loginInfo);
+        let userExists = false;
+    
+        if (loginInfo && Array.isArray(loginInfo)) {
+            for (let i = 0; i < loginInfo.length; i++) {
+                if (loginInfo[i].network === network && loginInfo[i].loginMethod === loginMethod) {
                     console.log("User already logged in");
-                    return;
+                    userExists = true;
+                    break;
                 }
             }
-        } catch (error) {
+        }
+    
+        if (!userExists) {
             const loginResponse = await fetch(`${API_URL}`, {
                 method: 'POST',
                 headers: {

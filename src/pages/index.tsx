@@ -9,8 +9,8 @@ const Index = () => {
       <div className="parent-container">
         <Header />
         <div className="landing-container">
-          <h1 className="landing-title">Convenient Place To Manage Your Assets In Bulk</h1>
-          <p className="landing-description">Convenient Place To Manage Your Assets In Bulk</p>
+          <h1 className="landing-title">Unified Management of Decentralized Identities & Digital Assets</h1>
+          <p className="landing-description">Seamlessly Manage your Decentralized Identities, Credentials, and Assets in one place</p>
           <button className="landing-button" onClick={() => router.push('/sign-up')}>Get Started</button>
         </div>
         <div className="half-circle"></div>

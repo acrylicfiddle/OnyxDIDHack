@@ -4,8 +4,9 @@ import {
   createCredential,
 } from "@jpmorganchase/onyx-ssi-sdk";
 import { privateKeyBufferFromString } from "./convertions";
+import { getNetworkNameforOnyx } from "./network";
 
-export const createVc = async (address: string) => {
+export const createVc = async (address: string, network: string) => {
   console.log(process.env.NEXT_PUBLIC_ISSUER_EDDSA_PRIVATE_KEY);
 
   const didKey = new KeyDIDMethod();
@@ -17,12 +18,7 @@ export const createVc = async (address: string) => {
     )
   );
 
-  const holderDidWithKeys = await didKey.generateFromPrivateKey(
-    privateKeyBufferFromString(
-      process.env.NEXT_PUBLIC_HOLDER_EDDSA_PRIVATE_KEY ||
-        "77d4cb97863d92c15f567d04d5c8313a00657d564f1d9a8b276793c1c588a3fe95f1614c10adc0b60b7bd1d13a39ec012657e2ca2d72f0a319c1c2e7ab1b27fd"
-    )
-  );
+  const holderDid = `did:ethr:${getNetworkNameforOnyx(network)}:${address}`;
 
   const vcDidKey = (await didKey.create()).did;
 
@@ -35,17 +31,39 @@ export const createVc = async (address: string) => {
   //   `\nGenerating a signed verifiable Credential of type ${credentialType}\n`
   // );
 
-  // const signedVc = await createAndSignCredentialJWT(
-  //   issuerDidWithKeys,
-  //   holderDidWithKeys.did,
-  //   subjectData,
-  //   [credentialType],
-  //   additionalParams
-  // );
+  const signedVcAddress = await createAndSignCredentialJWT(
+    issuerDidWithKeys,
+    holderDid,
+    {
+      address,
+    },
+    ["PROOF_OF_ADDRESS"],
+    additionalParams
+  );
+
+  const signedVcParticipant = await createAndSignCredentialJWT(
+    issuerDidWithKeys,
+    holderDid,
+    {
+      OnyxHackathonParticipant: true,
+    },
+    ["PROOF_OF_ONYX_HACKATHON_PARTICIPANT"],
+    additionalParams
+  );
+
+  const signedVcDIDEnthusiast = await createAndSignCredentialJWT(
+    issuerDidWithKeys,
+    holderDid,
+    {
+      DIDEnthusiast: true,
+    },
+    ["PROOF_OF_DID_ENTHUSIAST"],
+    additionalParams
+  );  
 
   const proofOfAddress = createCredential(
     issuerDidWithKeys.did,
-    holderDidWithKeys.did,
+    holderDid,
     {
       address,
     },
@@ -55,7 +73,7 @@ export const createVc = async (address: string) => {
 
   const proofOfParticipant = createCredential(
     issuerDidWithKeys.did,
-    holderDidWithKeys.did,
+    holderDid,
     {
       OnyxHackathonParticipant: true,
     },
@@ -65,7 +83,7 @@ export const createVc = async (address: string) => {
 
   const proofOfDIDEnthusiast = createCredential(
     issuerDidWithKeys.did,
-    holderDidWithKeys.did,
+    holderDid,
     {
       DIDEnthusiast: true,
     },
@@ -75,5 +93,8 @@ export const createVc = async (address: string) => {
 
   // console.log(signedVc);
 
-  return [proofOfAddress, proofOfParticipant, proofOfDIDEnthusiast];
+  return {
+      signedRes: [signedVcAddress, signedVcParticipant, signedVcDIDEnthusiast],
+      payload: [proofOfAddress, proofOfParticipant, proofOfDIDEnthusiast],
+    };
 };

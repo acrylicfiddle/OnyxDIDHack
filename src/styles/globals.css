@@ -214,6 +214,38 @@ ul {
   margin: 0 0 1.25rem;
 }
 
+.credential-card {
+  width: 90%;
+  padding: 10px;
+  margin: 1% 0;
+  border: 1px solid #585656;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.credential-card:hover {
+  transform: scale(1.01);
+  border: 1px solid #e1e4e8;
+}
+
+.credential-card.selected {
+  border: 2px solid blue;
+}
+
+.credential-json {
+  font-size: large;
+  margin-top: 10px;
+}
+
+.presentation-json {
+  font-size: large;
+  margin-top: 10px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 .home-page {
   display: flex;
   flex-direction: column;

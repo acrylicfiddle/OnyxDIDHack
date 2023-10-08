@@ -19,6 +19,17 @@ export const getNetworkUrl = (network: string) => {
     }
 };
 
+export const getNetworkNameforOnyx = (network: string) => {
+    switch (network) {
+        case Network.POLYGON_MUMBAI:
+            return 'maticmum';
+        case Network.ETHEREUM_GOERLI:
+            return 'goerli';
+        case Network.ZKSYNC_ERA_TESTNET:
+            return 'unknown';
+    }
+}
+
 export const getChainId = (network: string) => {
   switch (network) {
     case Network.POLYGON_MUMBAI:

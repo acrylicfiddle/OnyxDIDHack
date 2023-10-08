@@ -219,12 +219,13 @@ export default function SocialAuth() {
                     <DashboardTabs />
                 </div>
                 {
-                    address && provider && isVC && smartAccount && isBiconomy && (
+                    address && provider && isVC && (
                         <div className='dashboard-box'>
                             <ClaimVerifiableCredential address={address} smartAccount={smartAccount} />
                         </div>
                     )
                 }
+
                 {
                     !!smartAccount && provider && isBiconomy && !isVC && (
                         <div className='dashboard-box'>

@@ -26,7 +26,7 @@ export const getNetworkNameforOnyx = (network: string) => {
         case Network.ETHEREUM_GOERLI:
             return 'goerli';
         case Network.ZKSYNC_ERA_TESTNET:
-            return 'unknown';
+            return 'zksync';
     }
 }
 

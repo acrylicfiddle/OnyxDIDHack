@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import SeamlessNftAbi from "@/utils/abi/seamless-nft-abi.json";
-import AccountAbi from "@/utils/abi/account-abi.json";
 import { getNftContractAddress } from "@/utils/address";
 import { toast, ToastContainer } from 'react-toastify';
 import { getPrePaymasterParams } from "@/utils/get-paymaster-param";
@@ -92,7 +91,7 @@ const MintZkSyncNFT: React.FC<Props> = ({address}) => {
             
             console.log('account address is ', address);
             
-            const paymasterParams = await getPrePaymasterParams(signer);
+            const paymasterParams = await getPrePaymasterParams(address);
             console.log('paymasterParams is ', paymasterParams);
             const mintTx = await contract.populateTransaction.mint(1);
             console.log('Basic tx info', mintTx);
@@ -186,7 +185,7 @@ const MintZkSyncNFT: React.FC<Props> = ({address}) => {
         const signer = await provider.getSigner();
         
         console.log("here before userop")
-        const paymasterParams = await getPrePaymasterParams(signer);
+        const paymasterParams = await getPrePaymasterParams(address);
 
         console.log('paymasterParams is ', paymasterParams);
         const mintTx = await contract.populateTransaction.transferFrom(

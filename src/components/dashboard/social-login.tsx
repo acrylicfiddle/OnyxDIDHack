@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clearUser, clearToken, clearLoginMethod, clearEmailOrHandle } from '../../store/features/rootSlice';
 import MintNFT from '../nft/biconomy-nft-mint';
-import Button from '@/ui/Button';
 import ClaimVerifiableCredential from '../claimVerifiableCredential/claim-verifiable-credential';
 import { ethers } from 'ethers';
 import AAFactoryAbi from '@/utils/abi/aafactory-abi.json';
@@ -23,7 +22,8 @@ import MintZkSyncNFT from '../nft/zksync-nft-mint';
 import { LoadingBox } from '@/ui/LoadingBox';
 import formatAddress from '@/utils/format-address';
 import postLoginInfo from '@/utils/post-login-info';
-
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 export default function SocialAuth() {
     const [activeTab, setActiveTab] = useState('vc');
@@ -32,14 +32,14 @@ export default function SocialAuth() {
     const [interval, enableInterval] = useState(false)
     const [smartAccount, setSmartAccount] = useState<BiconomySmartAccount | null>(null);
     const [zkSmartAccount, setZkSmartAccount] = useState<ethers.Contract | null>(null); 
+    const [isCopied, setIsCopied] = useState(false);
     const { magic, provider } = useMagic();
     const router = useRouter();
     let network = useSelector((state: RootState) => state.network.network) ?? provider?.network?.name;
     const emailOrHandle = useSelector((state: RootState) => state.emailOrHandle.emailOrHandle);
     const userAddr = useSelector((state: RootState) => state.user.user);
     const loginMethod = useSelector((state: RootState) => state.loginMethod.loginMethod);
-    console.log("network: ", network)
-    console.log({ magic, provider })
+
     const dispatch = useDispatch();
     let chainId: number;
     let bundler: IBundler;
@@ -190,6 +190,30 @@ export default function SocialAuth() {
             </div>
         )
     }
+    
+
+    const handleCopyClick = async () => {
+        try {
+            await navigator.clipboard.writeText(address);
+            setIsCopied(true);
+            toast.info('Address Copied to Clipboard!', {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 3000);
+        } catch (err) {
+            console.error("Failed to copy text: ", err);
+        }
+    };
+
 
     return (
             <div>
@@ -202,9 +226,9 @@ export default function SocialAuth() {
                                     <div className='dashboard-header-subject'>
                                         Wallet
                                     </div>
-                                    <div className='wallet-text'>
+                                    <button className='wallet-text' onClick={handleCopyClick}>
                                         {formatAddress(address)}
-                                    </div>
+                                    </button>
                                     <div className='dashboard-header-subject'>
                                         Blockchain
                                     </div>
@@ -246,6 +270,18 @@ export default function SocialAuth() {
                         <LoadingBox login={login}/>
                     )
                 }
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
             </div>
     )
 }

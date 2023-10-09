@@ -87,7 +87,7 @@ export async function registerZkSyncDid(provider: Web3Provider | ethers.provider
         const salt = ethers.utils.formatBytes32String(emailOrHandle);
         await deployZkSyncAccount(signer, salt);
     };
-    const paymasterParams = await getPrePaymasterParams(signer);
+    const paymasterParams = await getPrePaymasterParams(address);
     console.log('paymasterParams is ', paymasterParams);
     const registerTx = await registryContract.populateTransaction.register('ethr', address);
     console.log('Basic tx info', registerTx);

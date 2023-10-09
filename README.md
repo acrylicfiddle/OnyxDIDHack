@@ -21,7 +21,8 @@ Are you tired of downloading multiple wallets and managing different keys to acc
 ## [Deck](https://1drv.ms/p/s!AhjTQk9cXvTA278zcRa5IBEOXJ7KTA?e=oeqD3Q)
 
 ## System Architecture
-![High-level design](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/c211d084-68ef-4af4-a0ae-f7ad3fe710d4)
+![high level design](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/883585af-9ebf-419e-a3c6-fbe2afad8ccf)
+
 
 ## Screenshots
 ![Home page](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/ee894d71-5c86-4f50-b56b-22858019a0a6)

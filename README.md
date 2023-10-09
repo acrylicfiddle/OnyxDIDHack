@@ -25,8 +25,13 @@ Are you tired of downloading multiple wallets and managing different keys to acc
 
 
 ## Screenshots
-![Home page](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/ee894d71-5c86-4f50-b56b-22858019a0a6)
-![Sign-in with social accounts](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/f9b31c8e-e463-42f2-8f5a-ec16e61b97b1)
-![User dashboard to see all VC's](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/e913f8f3-2df2-48b5-91b1-f141ed9b2e6b)
-![NFTs](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/620a66bd-f1d1-4595-a0db-ec393d09a747)
-![Send NFT dialog box](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/660e147a-298a-470d-a8b9-91c24b02a7db)
+![Home page](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/31689b54-9232-4bbc-90a0-781f90c326eb)
+
+![Sign-in with social accounts](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/56186208-87b2-4cfe-8c1f-d5a1989f7543)
+
+![User dashboard to see all VC's](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/42841367-f2cd-422f-a5ad-0b4921de29d7)
+
+![NFTs](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/68eb9fae-d06e-44f9-b4b4-5e71baa5a876)
+
+![Send NFT dialog box](https://github.com/acrylicfiddle/OnyxDIDHack/assets/24580317/262b8fa5-104a-491d-ba93-023dd2d7d55e)
+

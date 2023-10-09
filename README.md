@@ -16,7 +16,7 @@ Are you tired of downloading multiple wallets and managing different keys to acc
 - Seamless is compatible with all major web3 protocols and platforms, such as Ethereum, IPFS, Filecoin, etc.
 
 
-## [Demo video](https://1drv.ms/p/s!AhjTQk9cXvTA278zAr6YhFjcSTpEiA?e=ldy0Jb)
+## [Demo video](https://photos.onedrive.com/share/C0F45E5C4F42D318!1499061?cid=C0F45E5C4F42D318&resId=C0F45E5C4F42D318%211499061&authkey=%21AFxiNXiRzwxgAuk&ithint=video) 
 
 ## [Deck](https://1drv.ms/p/s!AhjTQk9cXvTA278zcRa5IBEOXJ7KTA?e=oeqD3Q)
 

@@ -15,6 +15,8 @@ Are you tired of downloading multiple wallets and managing different keys to acc
 - Users can interact with any web3 applications and services with a simple and intuitive interface.
 - Seamless is compatible with all major web3 protocols and platforms, such as Ethereum, IPFS, Filecoin, etc.
 
+## External Repository
+The contracts for zkSync Era including PermissionPaymaster can be found on [this link](https://github.com/sm-stack/Onyx-zkSync-contracts).
 
 ## [Demo video](https://photos.onedrive.com/share/C0F45E5C4F42D318!1499061?cid=C0F45E5C4F42D318&resId=C0F45E5C4F42D318%211499061&authkey=%21AFxiNXiRzwxgAuk&ithint=video) 
 
